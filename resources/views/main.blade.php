@@ -16,20 +16,88 @@
 <div id="main" style=" width:100%">
 <div class="form-group" style="width:40%; margin:20px; display:inline-block;">
     <label for="comment">Enter your text:</label>
-    <textarea class="form-control" rows="5" cols="50" id="comment"></textarea>
+    <textarea  rows="5" cols="50" id="comment" onkeyup="myFunction1()" value=""></textarea>
 </div>
 
 <div class="form-group" style="width:40%; margin:20px; float:right;  display:inline-block;">
     <label for="comment">Converted text:</label>
-  <div id="text" style="border:1px solid darkred;"></div>
+    <textarea id="text2" class="form-control" rows="5" cols="50"></textarea>
+  <div id="text" style="border:1px solid darkred;" contenteditable="true"></div>
 </div>
 
-    <div id="trial"><p>Hello</p></div>
-    <ul id="myList"></ul>
+
+
 </div>
-<button id="convert" onClick="myFunction()">Convert</button>
+
 
 <script>
+var text='';
+    $('#comment').keydown( function(e) {
+
+
+
+
+        if(/~(.*?)~/gi.test(this.value)||/\*(.*?)\*/gi.test(this.value)||
+            /_(.*?)_/gi.test(this.value)||/(#+)(.*?)[\n\r]/gi.test(this.value)){
+
+            text=this.value.replace(/~(.*?)~/gi, '<span style="text-decoration:line-through">$1</span>')
+                .replace(/\*(.*?)\*/gi, '<span style="font-style: italic">$1</span>')
+                .replace(/_(.*?)_/gi, '<span style="font-style: italic">$1</span>')
+                .replace(/(#+)(.*?)[\n\r]/gi,  function(match, capture, capture2){return '<h'+capture.length+'>'+capture2+'</h'+capture.length+'>'});
+        }
+
+
+
+
+
+        else text=this.value;
+
+
+            $('#text').empty().append(text);
+
+    });
+
+
+
+    /*$('#comment').keyup(function() {
+        var typedTextArray = $(this).val().split(/\s/g),
+            typedTextDisplay = [];
+
+        $(typedTextArray).each(function(index, elem){
+            switch(elem){
+                case '.-': typedTextDisplay.push('a'); break;
+                case '-...': typedTextDisplay.push('b'); break;
+                case '-.-.': typedTextDisplay.push('c'); break;
+                case '-..': typedTextDisplay.push('d'); break;
+                case '.': typedTextDisplay.push('e'); break;
+                case '..-.': typedTextDisplay.push('f'); break;
+                case '--.': typedTextDisplay.push('g'); break;
+                case '....': typedTextDisplay.push('h'); break;
+                case '..': typedTextDisplay.push('i'); break;
+                case '.---': typedTextDisplay.push('j'); break;
+                case '-.-': typedTextDisplay.push('k'); break;
+                case '.-..': typedTextDisplay.push('l'); break;
+                case '--': typedTextDisplay.push('m'); break;
+                case '-.': typedTextDisplay.push('n'); break;
+                case '---': typedTextDisplay.push('o'); break;
+                case '.--.': typedTextDisplay.push('p'); break;
+                case '--.-': typedTextDisplay.push('q'); break;
+                case '.-.': typedTextDisplay.push('r'); break;
+                case '...': typedTextDisplay.push('s'); break;
+                case '-': typedTextDisplay.push('t'); break;
+                case '..-': typedTextDisplay.push('u'); break;
+                case '...-': typedTextDisplay.push('v'); break;
+                case '.--': typedTextDisplay.push('w'); break;
+                case '-..-': typedTextDisplay.push('x'); break;
+                case '-.--': typedTextDisplay.push('y'); break;
+                case '--..': typedTextDisplay.push('z'); break;
+            }
+        });
+        console.log(typedTextDisplay);
+        $('#t').html(typedTextDisplay.join(''));
+    });*/
+
+
 var counter=0;
     function myFunction(){
         var text=document.getElementById('comment').value;
